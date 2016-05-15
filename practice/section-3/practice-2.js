@@ -1,24 +1,22 @@
 function create_updated_collection(collection_a, object_b) {
 
-	for(var i = 0; i < collection_a.length; i++)
-	{
-		if(isExist(collection_a[i].key, object_b.value))
-		{
-			if(collection_a[i].count >= 3)
-				collection_a[i].count -= parseInt(collection_a[i].count/3);	
-		}
-	}
+  collection_a.forEach(function (element) {
+    if (isExist(element.key, object_b.value)) {
+      if (element.count >= 3) {
+        element.count -= parseInt(element.count / 3);
+      }
+    }
+  });
 
-	return collection_a;
+  return collection_a;
 }
 
-function isExist(element, collection)
-{
-	for(var i = 0; i < collection.length; i++)
-	{
-		if(element === collection[i])
-			return true;
-	}
+function isExist(element, collection) {
 
-	return false;
+  for (var i = 0; i < collection.length; i++) {
+    if (collection[i] === element)
+      return true;
+  }
+
+  return false;
 }

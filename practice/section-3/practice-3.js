@@ -1,36 +1,48 @@
 function create_updated_collection(collection_a, object_b) {
+  
+  var collection_c = count_same_elements(collection_a);
 
-	var collection_c = [];
-
-	var element_number = 1;
-
-	for(var i = 0; i < collection_a.length; i++)
-	{
-		if(collection_a[i] === collection_a[i+1])
-			element_number++;
-		else
-		{
-			collection_c.push({key: collection_a[i], count: element_number});
-			element_number = 1;
-		}
-	}
-
-	for(var i = 0; i < collection_c.length; i++)
-	{
-		if(isExist(collection_c[i].key, object_b.value))
-			collection_c[i].count -= parseInt(collection_c[i].count/3);
-	}
-
-	return collection_c;
+  collection_c.forEach(function (element) {
+    if (isExist(element.key, object_b.value) && element.count >= 3) {
+      element.count -= parseInt(element.count/3);
+    }
+  });
+  
+  return collection_c;
 }
 
-function isExist(element, collection)
-{
-	for(var i = 0; i < collection.length; i++)
-	{
-		if(element === collection[i])
-			return true;
-	}
+function count_same_elements(collection_a) {
 
-	return false;
+  var collection_c = [];
+
+  collection_a.forEach(function (element) {
+    var item = findExistItem(element, collection_c);
+    if (item) {
+      item.count++;
+    } else {
+      collection_c.push({key: element, count: 1});
+    }
+  });
+
+  return collection_c;
+}
+
+function findExistItem(element, collection) {
+
+  for (var i = 0; i < collection.length; i++) {
+    if (collection[i].key === element) {
+      return collection[i];
+    }
+  }
+}
+
+function isExist(element, collection) {
+
+  for (var i = 0; i < collection.length; i++) {
+    if (collection[i] === element) {
+      return true;
+    }
+  }
+
+  return false;
 }
